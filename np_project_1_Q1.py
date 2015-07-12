@@ -7,7 +7,7 @@ import scipy.stats
 PATH_TO_CSV = "turnstile_weather_v2.csv"
 
 def run_entries_test(csv_path):
-  turnstile_data = pd.read_csv(PATH_TO_CSV)
+  turnstile_data = pd.read_csv(csv_path)
   print turnstile_data.describe()
 
   #Create rainy_day hourly entries column
