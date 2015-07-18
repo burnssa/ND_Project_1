@@ -17,7 +17,6 @@ def run_hourly_entry_chart(csv_path):
 	turnstile_data['UNIT_float'] = turnstile_data['UNIT'].str.replace('R','').astype(float)
 	turnstile_data['entries_float'] = turnstile_data['ENTRIESn'].str.replace(',','').convert_objects(convert_numeric=True)
 
-
 	#Get an array of top 10 units of ENTRIESn
 	turnstile_data_unit = turnstile_data.groupby(['UNIT_float']).sum()
 	turnstile_data_sorted = turnstile_data_unit.sort(['entries_float'], ascending=[0]).reset_index()
@@ -43,8 +42,6 @@ def run_hourly_entry_chart(csv_path):
 	ggtitle("Intra-day Entries at NYC's 10 Largest Subway Units") +\
 	xlim(0,20) +\
 	ylim(0,800000)
-
-
 	print p
 
 run_hourly_entry_chart(PATH_TO_CSV)

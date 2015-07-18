@@ -18,13 +18,24 @@ def run_entries_test(csv_path):
 
   rain_graph_df = pd.melt(turnstile_data, id_vars=['datetime'], value_vars=['rainy_entries', 'non_rainy_entries']).dropna().reset_index()
 
-  #create probability density chart for rainy and non-rainy days
+  #create faceted histogram chart for entries on rainy and non-rainy days
   p = ggplot(rain_graph_df, aes(x='value', color= 'variable', fill='variable')) +\
   geom_histogram(alpha = 0.3, binwidth=50) +\
   scale_x_continuous(limits=(0,10000)) +\
-  xlab("Hourly Entry Histogram on Rainy and Non-Rainy Days")
+  facet_wrap(x = 'variable', scales = 'fixed') +\
+  xlab("Hourly Entries") +\
+  ylab("Entry Outcome Frequency") +\
+  ggtitle("Hourly Entry Frequency on Rainy and Non-Rainy Days")
   print p
   
+  #create overlayed probability density chart for entries on rainy and non-rainy days
+  p = ggplot(rain_graph_df, aes(x='value', color= 'variable', fill='variable')) +\
+  geom_density(alpha = 0.2) +\
+  scale_x_continuous(limits=(0,10000)) +\
+  xlab("Hourly Entry Distribution") +\
+  ggtitle("Hourly Entry Density on Rainy and Non-Rainy Days")
+  print p
+
   # #Run Mann-Whitney test with original rain / non-rain columns
   non_rainy_entries = turnstile_data['non_rainy_entries'].dropna()
   rainy_entries = turnstile_data['rainy_entries'].dropna()
